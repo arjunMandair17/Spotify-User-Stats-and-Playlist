@@ -19,6 +19,8 @@ APIs used:
 - ReccoBeats API
 
 Startup Instructions:
+- Get your own Spotify Client Secret, Client ID, and Redirect URI through the Spotify for developers website
+- Create a session secret for signing express-session data
 - Enter the project directory
 - Open a terminal in the directory
 - Initialize dependencies with 'npm install'

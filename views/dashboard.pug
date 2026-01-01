@@ -1,0 +1,43 @@
+html 
+    head 
+        title #{userInfo.display_name}
+    
+    body 
+
+        link(rel="stylesheet", href="websiteStylesheet.css")
+
+
+        script(src = "js/chart.js")
+
+        h2.title #{userInfo.display_name}
+
+        if userInfo.images && userInfo.images.length > 0
+            img(src = `${userInfo.images[0].url}`, alt="user_pfp")#profileImg
+        else 
+            img(src = "filler_pfp.jpg", alt="user_pfp")#profileImg
+
+
+        h4.subtitle Followers: #{userInfo.followers.total}
+        h2.subtitle 
+            a(href = `${userInfo.external_urls.spotify}`, target = "_blank") Link To Account: 
+        
+        br
+        br
+        select#timePeriod(name = "timePeriod")
+            option(value="short_term") Past month
+            option(value="medium_term") Past 6 months
+            option(value="long_term") Past year
+
+        br
+        br
+
+        button#statsButton(class="button") Render Listening Stats
+
+
+        #chartDiv 
+
+        script(src = "js/dashboardStatic.js")
+
+
+
+        

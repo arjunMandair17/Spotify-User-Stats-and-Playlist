@@ -449,7 +449,9 @@ function generateCard(userData){
         shareTitle.innerHTML = "Share your Taste!";
         cardTitle.innerHTML = `${userData.name}'s music profile!`;
         let cardSongs = document.createElement("table");
+        cardSongs.classList.add("topSongsTable");
         let cardArtists = document.createElement("table");
+        cardArtists.classList.add("topArtistsTable");
         let counter = 1;
         for (const item of userData.songs){
             let curRow = document.createElement("tr");
@@ -499,8 +501,12 @@ function generateCard(userData){
         let exportButton = document.createElement("button");
         exportButton.innerHTML = "Save This Card";
 
+        let tablesContainer = document.createElement("div");
+        tablesContainer.classList.add("cardTablesContainer");
+        tablesContainer.append(cardArtists, cardSongs);
+
         sharePopup.append(shareTitle, cardCanvas, exportButton);
-        cardCanvas.append(cardTitle, cardArtists, cardSongs, cardGenre, cardTaste, cardSpotifyLink);
+        cardCanvas.append(cardTitle, tablesContainer, cardGenre, cardTaste, cardSpotifyLink);
 
         sharePopup.showModal();
 

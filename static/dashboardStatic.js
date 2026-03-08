@@ -306,11 +306,11 @@ async function renderListeningStats(){
     profileInfo.innerHTML = `We've analyzed your listening from your top songs, and discovered some interesting quirks about your listening habits. You often gravitate towards songs with a ${intensity} intensity. On top of this, your recent songs give off a ${energy} vibe, showing off the ${mood} artists at the top of your playlists. Furthermore, you've had a really special connection with ${topArtist.artist}, some would call you a superfan! We're glad you enjoy their music so much. As a whole, it looks like your favorite genre is ${topGenre.genre}, which makes sense given the songs you've been bumping lately. Keep being you!`;
     profileDiv.appendChild(profileInfo);
 
-    let cardSongs = userData.tracks.slice(0,6).map((song)=>{
+    let cardSongs = userData.tracks.slice(0,5).map((song)=>{
         return {name: `${song.name} - ${song.artists[0].name}`, image: song.album.images[0].url};
     });
 
-    let cardArtists = userData.artists.slice(0,4).map(artist=>{
+    let cardArtists = userData.artists.slice(0,5).map(artist=>{
         return {name: artist.name, image: artist.images[0].url}
     })
 
@@ -322,7 +322,7 @@ async function renderListeningStats(){
     userBaseInfo = await userBaseInfo.json();
 
     let cardData = {name: userBaseInfo.name, songs: cardSongs , artists: cardArtists, mood: mood, genre: topGenre.genre , url: userBaseInfo.link, pfp: userBaseInfo.pfp}
-    generateCard(cardData);
+    generateCard(cardData, profileDiv);
 
 
     
@@ -331,7 +331,8 @@ async function renderListeningStats(){
     playlistDesc.innerHTML = "We've generated a playlist for you based on your listening habits and top songs. Click the button below to add it to your spotify account!"
 
     let playlistButton = document.createElement("button");
-    playlistButton.classList.add("button");
+    playlistButton.type = "button";
+    playlistButton.classList.add("playlistGenerateButton");
     playlistButton.innerHTML = "Generate Playlist";
     profileDiv.appendChild(playlistButton);
 
@@ -429,29 +430,48 @@ function getEnergy(energyAvg, tempoAvg){
 }
 
 
-function generateCard(userData){
+function generateCard(userData, parentContainer){
+
+    let existingShareDiv = document.getElementById("shareDiv");
+    if(existingShareDiv){
+        existingShareDiv.remove();
+    }
 
     let shareDiv = document.createElement("div");
     shareDiv.id = "shareDiv";
-    document.body.appendChild(shareDiv);
+    parentContainer.appendChild(shareDiv);
 
     let shareButton = document.createElement("button");
-    shareButton.classList.add("button");
+    shareButton.type = "button";
+    shareButton.classList.add("shareCardButton");
     shareButton.innerHTML = "Share your listening with others!";
     shareDiv.appendChild(shareButton);
 
     shareButton.addEventListener("click", async (e)=>{
         let sharePopup = document.createElement("dialog");
+        sharePopup.id = "sharePopup";
         document.body.appendChild(sharePopup);
+        let closeButton = document.createElement("button");
+        closeButton.classList.add("sharePopupCloseButton");
+        closeButton.type = "button";
+        closeButton.innerHTML = "&times;";
+        closeButton.setAttribute("aria-label", "Close share popup");
+
+        closeButton.addEventListener("click", ()=>{
+            sharePopup.close();
+            sharePopup.remove();
+        });
+
         let shareTitle = document.createElement("h3");
         let cardTitle = document.createElement("h2");
         let cardCanvas = document.createElement("div");
+        cardCanvas.classList.add("cardCanvas");
         shareTitle.innerHTML = "Share your Taste!";
         cardTitle.innerHTML = `${userData.name}'s music profile!`;
         let cardSongs = document.createElement("table");
-        cardSongs.classList.add("topSongsTable");
+        cardSongs.classList.add("cardSongsTable");
         let cardArtists = document.createElement("table");
-        cardArtists.classList.add("topArtistsTable");
+        cardArtists.classList.add("cardArtistsTable");
         let counter = 1;
         for (const item of userData.songs){
             let curRow = document.createElement("tr");
@@ -466,7 +486,7 @@ function generateCard(userData){
             counter++;
 
             curSongImg.appendChild(actualImg);
-            curRow.append(curSongNum, curSongName, curSongImg);
+            curRow.append(curSongNum, curSongImg, curSongName);
             cardSongs.appendChild(curRow);
         }
         counter = 1;
@@ -484,7 +504,7 @@ function generateCard(userData){
             counter++;
 
             curArtistImg.appendChild(actualImg);
-            curRow.append(curArtistNum, curArtistName, curArtistImg);
+            curRow.append(curArtistNum, curArtistImg, curArtistName);
             cardArtists.appendChild(curRow);
         }
 
@@ -500,12 +520,26 @@ function generateCard(userData){
 
         let exportButton = document.createElement("button");
         exportButton.innerHTML = "Save This Card";
+        exportButton.classList.add("button");
 
         let tablesContainer = document.createElement("div");
         tablesContainer.classList.add("cardTablesContainer");
-        tablesContainer.append(cardArtists, cardSongs);
 
-        sharePopup.append(shareTitle, cardCanvas, exportButton);
+        let artistsSection = document.createElement("div");
+        artistsSection.classList.add("cardTableSection");
+        let artistsSectionTitle = document.createElement("h3");
+        artistsSectionTitle.innerHTML = "Top Artists";
+        artistsSection.append(artistsSectionTitle, cardArtists);
+
+        let songsSection = document.createElement("div");
+        songsSection.classList.add("cardTableSection");
+        let songsSectionTitle = document.createElement("h3");
+        songsSectionTitle.innerHTML = "Top Songs";
+        songsSection.append(songsSectionTitle, cardSongs);
+
+        tablesContainer.append(artistsSection, songsSection);
+
+        sharePopup.append(closeButton, shareTitle, cardCanvas, exportButton);
         cardCanvas.append(cardTitle, tablesContainer, cardGenre, cardTaste, cardSpotifyLink);
 
         sharePopup.showModal();

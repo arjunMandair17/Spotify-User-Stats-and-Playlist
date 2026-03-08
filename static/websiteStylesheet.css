@@ -46,6 +46,64 @@ a:hover {
     background-color: #17a44c;
 }
 
+#shareDiv {
+    margin-top: 16px;
+    width: fit-content;
+}
+
+.shareCardButton {
+    background: linear-gradient(135deg, #1f6feb, #00b4d8);
+    color: #ffffff;
+    padding: 11px 22px;
+    border: 1px solid #4cc9f0;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.shareCardButton:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.shareCardButton:active {
+    transform: translateY(0);
+}
+
+.playlistGenerateButton {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: #ffffff;
+    padding: 12px 24px;
+    border: 1px solid #fbbf24;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.playlistGenerateButton:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.playlistGenerateButton:active {
+    transform: translateY(0);
+}
+
+.playlistGenerateButton:disabled {
+    cursor: not-allowed;
+    filter: grayscale(0.2) brightness(0.85);
+    box-shadow: none;
+}
+
 .statsDiv {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -72,11 +130,19 @@ table {
 }
 
 .artistTable img {
-    width: 180px;
+    width: 130px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .artistTable h3 {
-    font-size: 1.35em;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.artistTable td,
+.artistTable th {
+    padding: 6px;
 }
 
 td, th {
@@ -161,12 +227,103 @@ select {
 }
 
 .cardTablesContainer {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
     margin: 20px 0;
 }
 
-.topArtistsTable, .topSongsTable {
-    flex: 1;
+.cardTableSection {
+    background-color: #2f2f2f;
+    border: 1px solid #4a4a4a;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.cardTableSection h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.cardCanvas {
+    background-color: #3a3a3a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #17a44c;
+    width: min(920px, 92vw);
+    margin: auto;
+}
+
+.cardCanvas h2 {
+    margin-bottom: 15px;
+}
+
+.cardSongsTable, .cardArtistsTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.cardArtistsTable img, .cardSongsTable img {
+    width: 72px;
+    height: auto;
+}
+
+.cardArtistsTable td:first-child, .cardSongsTable td:first-child {
+    width: 30px;
+    font-weight: bold;
+}
+
+.cardArtistsTable td:nth-child(2), .cardSongsTable td:nth-child(2) {
+    width: 82px;
+}
+
+.cardArtistsTable td:nth-child(3), .cardSongsTable td:nth-child(3) {
+    text-align: left;
+    word-break: break-word;
+}
+
+#sharePopup {
+    background-color: #262626;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 12px;
+    width: min(980px, 94vw);
+    height: auto;
+    padding: 16px;
+    border: solid #17a44c 2px;
+    border-radius: 10px;
+}
+
+.sharePopupCloseButton {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid #5a5a5a;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.sharePopupCloseButton:hover {
+    background-color: #323232;
+}
+
+#sharePopup::backdrop {
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+@media (max-width: 900px) {
+    .cardTablesContainer {
+        grid-template-columns: 1fr;
+    }
 }

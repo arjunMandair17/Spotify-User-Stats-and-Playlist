@@ -545,8 +545,6 @@ function generateCard(userData, parentContainer){
         sharePopup.showModal();
 
         exportButton.addEventListener("click", async(e)=>{
-            // make call to server to download card
-            // DO THIS SOON 
 
             const canvas = await html2canvas(cardCanvas, {useCORS: true});
 
@@ -561,12 +559,12 @@ function generateCard(userData, parentContainer){
                 URL.revokeObjectURL(link.href);
             })
 
-            // once it gets here add a close button
 
 
-
+            
             sharePopup.close();
             sharePopup.remove();
+            window.location.href = window.location.href;
 
         })
     })

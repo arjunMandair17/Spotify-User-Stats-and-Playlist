@@ -267,6 +267,12 @@ select {
 .cardArtistsTable img, .cardSongsTable img {
     width: 72px;
     height: auto;
+    margin: 0;
+    display: block;
+}
+
+.cardArtistsTable td, .cardSongsTable td {
+    vertical-align: middle;
 }
 
 .cardArtistsTable td:first-child, .cardSongsTable td:first-child {

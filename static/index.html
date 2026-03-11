@@ -7,15 +7,24 @@
 <body>
 
     <script>
-        // validate email and send to the server
+        // validate info and send to the server
     </script>
-    <h1>Welcome to the Home Page</h1>
-    <p>This is a landing page for the project, from which you can access your Spotify data.</p>
+    <h1>Welcome to <span>Spoti-Stats</span>!</h1>
+    <p>As of now, this project is in development mode, and as such cannot handle more than a select few users.</p>
+    <p>If you'd like to be added to the list of approved users, please enter your name, email, and a brief message below.</p>
 
-    <p> Here is a link to the auth login: <a href="/authorize">Login</a></p>
 
+    <input type="text" id="name" name="name" placeholder="Enter your name">
+    <br><br>
     <input type="email" id="email" name="email" placeholder="Enter your email">
-    <button id="submitEmail" onclick="submitEmail()">Submit</button>
+    <br> <br>
+    <input type="text" id="message" name="message" placeholder="Enter your message">
+    <br><br>
+    <button id="submitEmail" onclick="submitInfo()">Submit</button>
+
+    <br><br>
+    <p> If you've already been approved, click the link below to access your dashboard: </p>
+    <a href="/authorize">Login</a>
 
 </body>
 </html>

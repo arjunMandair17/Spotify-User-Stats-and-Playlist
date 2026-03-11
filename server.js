@@ -13,7 +13,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {sameSite: "lax"}
+    cookie: {sameSite: "lax", httpOnly: true, secure: process.env.NODE_ENV === "production"}
 }));
 
 app.use(express.static("static"));
@@ -97,6 +97,9 @@ app.get("/user/data", async (req, res)=>{
 
     let timePeriod = req.query.timePeriod;
 
+    if(timePeriod !== "short_term" && timePeriod !== "medium_term" && timePeriod !== "long_term"){
+        return res.status(400).send("ERROR: Invalid time period provided");
+    }
 
     // get the user's top artists for data analysis
     let userArtists = await fetch("https://api.spotify.com/v1/me/top/artists?time_range=" + timePeriod + "&limit=10",  {
@@ -178,6 +181,11 @@ app.post("/user/data/playlist", async(req,res)=>{
 
     if(!checkAuth(req,res)) return;
 
+    // ensure that song.href is in the format of "https://open.spotify.com/track/{id}"
+    if(!req.body.every(song => song.href.startsWith("https://open.spotify.com/track/"))){
+        return res.status(400).send("ERROR: Invalid song format provided");
+    }
+    
     let songs = req.body;
     let songUris = songs.map(song=> `spotify:track:${song.href.replace("https://open.spotify.com/track/", "")}`);
 

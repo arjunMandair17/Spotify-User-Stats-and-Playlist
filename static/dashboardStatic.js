@@ -69,7 +69,7 @@ async function renderListeningStats(){
         curNumberContainer.appendChild(curNumber);
         img.src = item.images[1].url;
         tableImg.appendChild(img);
-        artistName.innerHTML = item.name;
+        artistName.textContent = item.name;
         spotifyAnchor.href = item.external_urls.spotify;
         spotifyAnchor.target = "_blank"
         tableArtistName.appendChild(spotifyAnchor);
@@ -95,8 +95,8 @@ async function renderListeningStats(){
         counter++;
         curNumberContainer.appendChild(curNumber);
         img.src = item.album.images[1].url;
-        title.innerHTML = item.name;
-        artist.innerHTML = `by ${item.artists[0].name}`;
+        title.textContent = item.name;
+        artist.textContent = `by ${item.artists[0].name}`;
         titleAnchor.href = item.external_urls.spotify;
         titleAnchor.target = "_blank"
         
@@ -133,7 +133,7 @@ async function renderListeningStats(){
 
     
     let topArtistText = document.createElement("h2");
-    topArtistText.innerHTML = "Your top artist is " + topArtist.artist;;
+    topArtistText.textContent = "Your top artist is " + topArtist.artist;
 
     let chartsContainer = document.createElement("div");
     chartsContainer.id = "chartsContainer";
@@ -197,7 +197,7 @@ async function renderListeningStats(){
     })
 
     let topMoodText = document.createElement("h2");
-    topMoodText.innerHTML = "Most of your songs are " + topMood.mood;
+    topMoodText.textContent = "Most of your songs are " + topMood.mood;
 
     let moodChart = document.createElement("canvas");
     moodChart.id = "moodChart";
@@ -247,7 +247,7 @@ async function renderListeningStats(){
     })
 
     let topGenreText = document.createElement("h2");
-    topGenreText.innerHTML = "Your most played genre is " + topGenre.genre;
+    topGenreText.textContent = "Your most played genre is " + topGenre.genre;
     chartDiv.appendChild(topGenreText);
 
     let genreChart = document.createElement("canvas");
@@ -303,7 +303,7 @@ async function renderListeningStats(){
     chartDiv.appendChild(profileDiv);
     let profileInfo = document.createElement("h4");
     profileInfo.id = "profileInfo";
-    profileInfo.innerHTML = `We've analyzed your listening from your top songs, and discovered some interesting quirks about your listening habits. You often gravitate towards songs with a ${intensity} intensity. On top of this, your recent songs give off a ${energy} vibe, showing off the ${mood} artists at the top of your playlists. Furthermore, you've had a really special connection with ${topArtist.artist}, some would call you a superfan! We're glad you enjoy their music so much. As a whole, it looks like your favorite genre is ${topGenre.genre}, which makes sense given the songs you've been bumping lately. Keep being you!`;
+    profileInfo.textContent = `We've analyzed your listening from your top songs, and discovered some interesting quirks about your listening habits. You often gravitate towards songs with a ${intensity} intensity. On top of this, your recent songs give off a ${energy} vibe, showing off the ${mood} artists at the top of your playlists. Furthermore, you've had a really special connection with ${topArtist.artist}, some would call you a superfan! We're glad you enjoy their music so much. As a whole, it looks like your favorite genre is ${topGenre.genre}, which makes sense given the songs you've been bumping lately. Keep being you!`;
     profileDiv.appendChild(profileInfo);
 
     let cardSongs = userData.tracks.slice(0,5).map((song)=>{
@@ -467,7 +467,7 @@ function generateCard(userData, parentContainer){
         let cardCanvas = document.createElement("div");
         cardCanvas.classList.add("cardCanvas");
         shareTitle.innerHTML = "Share your Taste!";
-        cardTitle.innerHTML = `${userData.name}'s music profile!`;
+        cardTitle.textContent = `${userData.name}'s music profile!`;
         let cardSongs = document.createElement("table");
         cardSongs.classList.add("cardSongsTable");
         let cardArtists = document.createElement("table");
@@ -481,7 +481,7 @@ function generateCard(userData, parentContainer){
             let actualImg = document.createElement("img");
 
             actualImg.src = item.image;
-            curSongName.innerHTML = item.name;
+            curSongName.textContent = item.name;
             curSongNum.innerHTML = counter;
             counter++;
 
@@ -499,7 +499,7 @@ function generateCard(userData, parentContainer){
             let actualImg = document.createElement("img");
 
             actualImg.src = item.image;
-            curArtistName.innerHTML = item.name;
+            curArtistName.textContent = item.name;
             curArtistNum.innerHTML = counter;
             counter++;
 
@@ -511,12 +511,12 @@ function generateCard(userData, parentContainer){
 
         let cardTaste = document.createElement("h3");
         let cardGenre = document.createElement("h3");
-        cardTaste.innerHTML = `I mostly listen to ${userData.mood} music, it's been my vibe recently.`;
-        cardGenre.innerHTML = `My top genre is ${userData.genre}!`;
+        cardTaste.textContent = `I mostly listen to ${userData.mood} music, it's been my vibe recently.`;
+        cardGenre.textContent = `My top genre is ${userData.genre}!`;
         
         let cardSpotifyLink = document.createElement("h2");
 
-        cardSpotifyLink.innerHTML = `Visit my Spotify page at ${userData.url}`;
+        cardSpotifyLink.textContent = `Visit my Spotify page at ${userData.url}`;
 
         let exportButton = document.createElement("button");
         exportButton.innerHTML = "Save This Card";
